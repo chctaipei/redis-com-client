@@ -31,6 +31,8 @@ namespace redis_com_client
         public static void Close(bool allowCommandsToComplete = true)
         {
             _redisClientsManager.Close(allowCommandsToComplete);
+            _redisClientsManager.Dispose();
+            _redisClientsManager = null;
         }
     }
 }
