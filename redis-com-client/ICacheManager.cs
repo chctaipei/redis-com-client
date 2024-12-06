@@ -10,6 +10,8 @@ namespace redis_com_client
     {
         void Open(string hostname);
 
+        void Close(bool allowCommandsToComplete);
+
         void Del(string key);
         bool Exists(string key);
         void ExpireAt(string key, DateTime ExpireDatetime);
