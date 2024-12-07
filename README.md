@@ -48,6 +48,15 @@ Set Redis = Server.CreateObject("RedisComClient")
     Response.Write("Testhash[firstfield] = " & Redis.Hget("testhash", "firstfield") & "<br/>")
     Response.Write("Testhash[secondfield] = " & Redis.Hget("testhash", "secondfield") & "<br/>")
 
+    ' get all keys
+    Dim dict
+    set dict = Redis.Hgetall("testhash")
+    Dim key
+    For Each key In dict.Keys
+       Response.Write "Key: " & key & ", Value: " & dict.Item(key) & "<br>"
+    Next
+    set dict = Nothing
+
     ' ...and expire the entire hash
     call Redis.Expire("testhash", 60)
     Response.Write("Testhash will expire in 60 seconds. The TTL is:" & Redis.TTL("testhash") & "<br/>")
