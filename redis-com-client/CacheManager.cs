@@ -159,17 +159,23 @@ namespace redis_com_client
         public object Hgetall(string hashKey)
         {
             var entries = _redisinstance.HashGetAll(hashKey);
-            object[] result = new object[entries.Length * 2];
-            for (int i = 0; i < entries.Length; i++)
-            {
-                result[i * 2] = entries[i].Name.ToString();
-                result[i * 2 + 1] = entries[i].Value.ToString();
-            }
+            // object[] result = new object[entries.Length * 2];
+            //for (int i = 0; i < entries.Length; i++)
+            //{
+            //    result[i * 2] = entries[i].Name.ToString();
+            //    result[i * 2 + 1] = entries[i].Value.ToString();
+            //}
             //second choice:
             //  object[] result = new object[entries.Length];
             //  for (int i = 0; i < entries.Length; i++) {
             //      result[i]=entries[i].ToString();
             //  }
+
+            var result = new Dictionary();
+            foreach (var entry in entries)
+            {
+                result.Add(entry.Name.ToString(), entry.Value.ToString());
+            }
             return result;
         }
 
