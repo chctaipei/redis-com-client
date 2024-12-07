@@ -156,7 +156,7 @@ namespace redis_com_client
             return (string)_redisinstance.HashGet(key, field);
         }
 
-        public object Hgetall(string key)
+        public object Hgetall(string hashKey)
         {
             var entries = _redisinstance.HashGetAll(hashKey);
             object[] result = new object[entries.Length * 2];
