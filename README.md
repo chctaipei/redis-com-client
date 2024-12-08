@@ -57,6 +57,17 @@ Set Redis = Server.CreateObject("RedisComClient")
     Next
     set dict = Nothing
 
+    ' put dictionary in hashes
+    Set ndict = CreateObject("Scripting.Dictionary")
+    ndict.add "thirdfield", "thirdvalue"
+    ndict.add "field", "thirdvalue"
+    ndict.add "haha", "thirdvalue"
+    call Redis.HsetDict("testhashdict", ndict)
+    For Each key In ndict.Keys
+       Response.Write "Key: " & key & ", Value: " & ndict.Item(key) & "<br>"
+    Next
+    set ndict = Nothing
+
     ' ...and expire the entire hash
     call Redis.Expire("testhash", 60)
     Response.Write("Testhash will expire in 60 seconds. The TTL is:" & Redis.TTL("testhash") & "<br/>")
