@@ -159,18 +159,6 @@ namespace redis_com_client
         public object Hgetall(string hashKey)
         {
             var entries = _redisinstance.HashGetAll(hashKey);
-            // object[] result = new object[entries.Length * 2];
-            //for (int i = 0; i < entries.Length; i++)
-            //{
-            //    result[i * 2] = entries[i].Name.ToString();
-            //    result[i * 2 + 1] = entries[i].Value.ToString();
-            //}
-            //second choice:
-            //  object[] result = new object[entries.Length];
-            //  for (int i = 0; i < entries.Length; i++) {
-            //      result[i]=entries[i].ToString();
-            //  }
-
             var result = new Dictionary();
             foreach (var entry in entries)
             {
@@ -189,7 +177,27 @@ namespace redis_com_client
             return _redisinstance.HashSet(key, field, value);
         }
 
+        public void HsetDict(string key, object data)
+        {
+            Scripting.Dictionary dic = (Scripting.Dictionary) data;
 
+            if (dic == null)
+            {
+                throw new ArgumentException("Data must be of type Scripting.Dictionary.");
+            }
+            int index = 0;
+
+            HashEntry[] hashEntries = new HashEntry[dic.Count];
+
+            foreach (string keyStr in dic)
+            {
+                object value = dic.get_Item(keyStr);
+                hashEntries[index] = new HashEntry(keyStr, value.ToString());
+                index++;
+            }
+
+            _redisinstance.HashSet(key, hashEntries); 
+        }
 
         public void SetExpiration(string key, int milliseconds)
         {
