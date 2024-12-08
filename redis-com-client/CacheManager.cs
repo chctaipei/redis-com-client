@@ -3,6 +3,7 @@ using System.EnterpriseServices;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using StackExchange.Redis;
+using Scripting;
 
 namespace redis_com_client
 {
