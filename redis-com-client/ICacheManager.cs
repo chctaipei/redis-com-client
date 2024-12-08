@@ -35,7 +35,8 @@ namespace redis_com_client
         object Hgetall(string key);
         long Hlen(string key);
         bool Hset(string key, string field, string value);
-        
+        void HsetDict(string key, object data);
+
         /*
         String[] Hkeys(string key);
         Object[] Hvals(string key);
